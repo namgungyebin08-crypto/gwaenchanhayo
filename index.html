@@ -144,7 +144,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
         <option value="강화읍">강화읍</option>
       </select>
     </div>
-    <div class="form-g"><label class="form-lbl">담당자 연락처</label><input id="r-contact" type="text" placeholder="예) 010-1234-5678"></div>
     <button class="sub-btn" onclick="regPerson()">등록하기</button>
     <div class="ok-msg" id="reg-ok">✓ 등록이 완료되었습니다!</div>
   </div>
@@ -169,11 +168,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
 <script>
 const STORAGE_KEY='gwaenchanhayo_gb_v1';
 let persons=[
-  {id:1,name:"김순자",area:"교동면",contact:"032-930-0001",ok:true,time:"오전 8:42"},
-  {id:2,name:"이봉남",area:"교동면",contact:"032-930-0002",ok:false,time:null},
-  {id:3,name:"박정순",area:"교동면",contact:"032-930-0003",ok:true,time:"오전 9:15"},
-  {id:4,name:"최길동",area:"삼산면",contact:"032-930-0004",ok:false,time:null},
-  {id:5,name:"윤복희",area:"교동면",contact:"032-930-0005",ok:true,time:"오전 10:02"},
+  {id:1,name:"김순자",area:"교동면",ok:true,time:"오전 8:42"},
+  {id:2,name:"이봉남",area:"교동면",ok:false,time:null},
+  {id:3,name:"박정순",area:"교동면",ok:true,time:"오전 9:15"},
+  {id:4,name:"최길동",area:"삼산면",ok:false,time:null},
+  {id:5,name:"윤복희",area:"교동면",ok:true,time:"오전 10:02"},
 ];
 let nid=6,myOk=false,gbEntries=[];
 
@@ -223,7 +222,7 @@ function renderManager(){
       <div class="av">${p.ok?'😊':'❓'}</div>
       <div class="p-info">
         <div class="p-name">${p.name} 어르신</div>
-        <div class="p-det">${p.area} · ${p.contact}</div>
+        <div class="p-det">${p.area}</div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
         <span class="badge ${p.ok?'b-ok':'b-no'}">${p.ok?'응답 완료':'미응답 !'}</span>
@@ -240,11 +239,11 @@ function markOk(id){
 function regPerson(){
   const name=document.getElementById('r-name').value.trim();
   const area=document.getElementById('r-area').value;
-  const contact=document.getElementById('r-contact').value.trim();
-  if(!name||!contact){alert('성함과 연락처를 입력해주세요.');return;}
-  persons.push({id:nid++,name,area,contact,ok:false,time:null});
+  
+  if(!name){alert("성함을 입력해주세요.");return;}
+  persons.push({id:nid++,name,area,ok:false,time:null});
   document.getElementById('r-name').value='';
-  document.getElementById('r-contact').value='';
+
   const m=document.getElementById('reg-ok');
   m.style.display='block';setTimeout(()=>m.style.display='none',2500);
   renderRegList();
